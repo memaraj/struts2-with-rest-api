@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.convention.action.suffix" value="Controller"/>
+    <constant name="struts.convention.action.mapAllMatches" value="true"/>
+    <constant name="struts.convention.default.parent.package" value="rest-default"/>
+    <constant name="struts.convention.package.locators" value="rest" />
+    <constant name="struts.mapper.class" value="org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper" />
+    <constant name="struts.mapper.prefixMapping" value="/api:rest,:struts"/>
+    <constant name="struts.rest.namespace" value="/api" />
+    <constant name="struts.rest.content.restrictToGET" value="false"/>
+
+    <package name="basicstruts2" namespace="/" extends="struts-default">
+        <action name="index">
+            <result>/index.jsp</result>
+        </action>
+
+        <action name="login" class="com.example.proj.action.Login">
+            <!-- <interceptor-ref name="defaultStack"/> -->
+            <result name="input">/index.jsp</result>
+            <result name="success">/welcome.jsp</result>
+        </action>
+
+        <action name="register" class="com.example.proj.action.Register" method="execute">
+            <result name="success">/thankyou.jsp</result>
+            <result name="input">/register.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="list" class="com.example.proj.action.List" method="execute">
+            <result name="success">/lists.jsp</result>
+        </action>
+
+        <action name="displayUser" class="com.example.proj.action.List" method="displayUser">
+            <result name="success">/welcome.jsp</result>
+        </action>
+    </package>
+    <package name="api" namespace="/api" extends="rest-default">
+        <action name="accounts/*" class="com.example.proj.rest.AccountsController">
+            <param name="id">{1}</param>
+        </action>
+    </package>
+
+</struts>
